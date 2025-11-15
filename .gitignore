@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Database
+signups.db
+signups.db-journal
+
+# Environment variables
+.env
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
