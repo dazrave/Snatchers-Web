@@ -52,6 +52,39 @@ Check out the guides in the `guides` folder for detailed instructions on:
 - Adding new sections
 - Uploading to the internet
 
+## 🚀 Running the Server
+
+This website now includes a backend server with SQLite database to save email signups!
+
+### Installation
+
+1. Make sure you have Node.js installed (v14 or higher)
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+### Starting the Server
+
+```bash
+npm start
+```
+
+The server will start on `http://localhost:3000`
+
+### Features
+
+- **Email Signup**: Visitors can sign up and their emails are saved to a SQLite database
+- **Admin Dashboard**: View all signups at `/admin.html` (password: `snatchit`)
+- **Duplicate Prevention**: Same email can't sign up twice
+- **Email Validation**: Both frontend and backend validation
+
+### Admin Access
+
+1. Navigate to `http://localhost:3000/admin.html`
+2. Enter password: `snatchit`
+3. View all email signups with statistics
+
 ## 📚 Beginner Guides
 
 We've created step-by-step guides for everything:

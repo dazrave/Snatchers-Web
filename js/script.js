@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const formMessage = document.getElementById('formMessage');
 
     if (signupForm) {
-        signupForm.addEventListener('submit', (e) => {
+        signupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const email = emailInput.value.trim();
@@ -24,18 +24,48 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Simulate form submission
-            // In a real app, you would send this to a server
-            console.log('Email submitted:', email);
+            // Disable button during submission
+            const submitButton = signupForm.querySelector('button[type="submit"]');
+            const originalButtonText = submitButton.innerHTML;
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<span>Signing up...</span>';
 
-            // Show success message
-            showMessage('Awesome! You\'re on the list! 🎉', 'success');
+            try {
+                // Send to backend
+                const response = await fetch('/api/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email })
+                });
 
-            // Clear the form
-            emailInput.value = '';
+                const data = await response.json();
 
-            // Optional: Send to your email service (Mailchimp, ConvertKit, etc.)
-            // submitToEmailService(email);
+                if (data.success) {
+                    // Show success message
+                    showMessage('Awesome! You\'re on the list! 🎉', 'success');
+
+                    // Clear the form
+                    emailInput.value = '';
+
+                    console.log('Email submitted successfully:', email);
+                } else {
+                    // Show error message
+                    if (response.status === 409) {
+                        showMessage('You\'re already on the list! 😊', 'error');
+                    } else {
+                        showMessage(data.message || 'Oops! Something went wrong. Try again! 😅', 'error');
+                    }
+                }
+            } catch (error) {
+                console.error('Error submitting email:', error);
+                showMessage('Oops! Something went wrong. Try again! 😅', 'error');
+            } finally {
+                // Re-enable button
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonText;
+            }
         });
     }
 
