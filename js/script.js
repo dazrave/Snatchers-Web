@@ -370,6 +370,44 @@ console.log(`
 Type "chaos" for a surprise! 🎉
 `, 'color: #FF6B9D; font-weight: bold;', 'color: #4ECDC4; font-size: 16px;', 'color: #FFE66D;');
 
+// ===== COUNTDOWN TIMER (COUNTS UP!) =====
+// This is a joke timer that counts UP instead of down
+// Because we have NO idea when we'll actually release! 😅
+document.addEventListener('DOMContentLoaded', () => {
+    // Set a "start date" - this could be when you first said "coming soon"
+    // For fun, let's start from 30 days ago (like the old website)
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - 30); // Started "30 days ago"
+
+    function updateCountdown() {
+        const now = new Date();
+        const elapsed = Math.floor((now - startDate) / 1000); // Total seconds elapsed
+
+        // Calculate days, hours, minutes, seconds
+        const days = Math.floor(elapsed / 86400);
+        const hours = Math.floor((elapsed % 86400) / 3600);
+        const minutes = Math.floor((elapsed % 3600) / 60);
+        const seconds = elapsed % 60;
+
+        // Update the DOM
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+
+        if (daysEl) daysEl.textContent = days;
+        if (hoursEl) hoursEl.textContent = hours;
+        if (minutesEl) minutesEl.textContent = minutes;
+        if (secondsEl) secondsEl.textContent = seconds;
+    }
+
+    // Update immediately and then every second
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    console.log('⏰ Countdown timer started - counting UP because why not! 🚀');
+});
+
 // ===== EXPORT FOR TESTING =====
 // Export functions for easy testing (optional)
 if (typeof module !== 'undefined' && module.exports) {
